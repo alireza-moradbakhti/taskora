@@ -82,3 +82,7 @@ dependencies {
     implementation(libs.navigation.compose)
 
 }
+
+kapt {
+    correctErrorTypes = true
+}
