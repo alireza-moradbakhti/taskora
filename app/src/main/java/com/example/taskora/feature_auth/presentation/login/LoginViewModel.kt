@@ -2,6 +2,10 @@ package com.example.taskora.feature_auth.presentation.login
 
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
+import com.example.taskora.feature_auth.domain.usecase.ValidateLoginInputs
+import com.example.taskora.feature_auth.domain.util.EmptyEmailException
+import com.example.taskora.feature_auth.domain.util.EmptyPasswordException
+import com.example.taskora.feature_auth.domain.util.InvalidEmailException
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val validateLoginInputs: ValidateLoginInputs
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(LoginState())
@@ -26,7 +31,12 @@ class LoginViewModel @Inject constructor(
 
             is LoginEvent.PasswordChanged -> {
                 val password = event.value
-                _state.update { it.copy(password = password, passwordError = validatePassword(password)) }
+                _state.update {
+                    it.copy(
+                        password = password,
+                        passwordError = validatePassword(password)
+                    )
+                }
             }
 
             is LoginEvent.Submit -> {
@@ -36,36 +46,35 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun tryLogin() {
-        val currentState = _state.value
+        val email = _state.value.email
+        val password = _state.value.password
 
-        val emailError = validateEmail(currentState.email)
-        val passwordError = validatePassword(currentState.password)
+        try {
+            validateLoginInputs(email, password)
 
-        if (emailError != null || passwordError != null) {
-            _state.update {
-                it.copy(
-                    emailError = emailError,
-                    passwordError = passwordError
-                )
-            }
-            return
-        }
+            _state.update { it.copy(isLoading = true, loginError = null) }
 
-        _state.update { it.copy(isLoading = true, loginError = null) }
-
-        firebaseAuth.signInWithEmailAndPassword(currentState.email, currentState.password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    _state.update { it.copy(isLoading = false, success = true) }
-                } else {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            loginError = task.exception?.localizedMessage ?: "Login failed"
-                        )
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        _state.update { it.copy(isLoading = false, success = true) }
+                    } else {
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                loginError = task.exception?.localizedMessage ?: "Login failed"
+                            )
+                        }
                     }
                 }
-            }
+
+        } catch (e: EmptyEmailException) {
+            _state.update { it.copy(emailError = e.message) }
+        } catch (e: InvalidEmailException) {
+            _state.update { it.copy(emailError = e.message) }
+        } catch (e: EmptyPasswordException) {
+            _state.update { it.copy(passwordError = e.message) }
+        }
     }
 
 

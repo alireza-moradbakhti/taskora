@@ -10,8 +10,3 @@ data class LoginState(
     val success: Boolean = false
 )
 
-
-class InvalidEmailException(message: String = "Invalid email format") : Exception(message)
-class EmptyPasswordException(message: String = "Password cannot be empty") : Exception(message)
-class EmptyEmailException(message: String = "Email cannot be empty") : Exception(message)
-
