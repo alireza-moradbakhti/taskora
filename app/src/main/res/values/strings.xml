@@ -6,4 +6,6 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="sign_up_desc">Don\'t have an account? Sign up</string>
+    <string name="password_visible">Show Password</string>
+    <string name="password_invisible">Hide password</string>
 </resources>
