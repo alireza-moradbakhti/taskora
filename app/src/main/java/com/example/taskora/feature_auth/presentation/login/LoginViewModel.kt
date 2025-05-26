@@ -2,20 +2,22 @@ package com.example.taskora.feature_auth.presentation.login
 
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.taskora.feature_auth.domain.usecase.AuthUseCases
 import com.example.taskora.feature_auth.domain.usecase.ValidateLoginInputs
 import com.example.taskora.feature_auth.domain.util.EmptyEmailException
 import com.example.taskora.feature_auth.domain.util.EmptyPasswordException
 import com.example.taskora.feature_auth.domain.util.InvalidEmailException
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val firebaseAuth: FirebaseAuth,
+    private val firebaseAuth: AuthUseCases,
     private val validateLoginInputs: ValidateLoginInputs
 ) : ViewModel() {
 
@@ -46,34 +48,29 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun tryLogin() {
-        val email = _state.value.email
-        val password = _state.value.password
+        viewModelScope.launch {
+            try {
+                val email = _state.value.email
+                val password = _state.value.password
 
-        try {
-            validateLoginInputs(email, password)
+                validateLoginInputs(email, password)
 
-            _state.update { it.copy(isLoading = true, loginError = null) }
+                _state.update { it.copy(isLoading = true, loginError = null) }
 
-            firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        _state.update { it.copy(isLoading = false, success = true) }
-                    } else {
-                        _state.update {
-                            it.copy(
-                                isLoading = false,
-                                loginError = task.exception?.localizedMessage ?: "Login failed"
-                            )
-                        }
-                    }
+                firebaseAuth.loginUseCase(email, password).onSuccess {
+                    _state.update { it.copy(isLoading = false, success = true) }
+                }.onFailure { error ->
+                    _state.update { it.copy(isLoading = false, loginError = error.message) }
                 }
 
-        } catch (e: EmptyEmailException) {
-            _state.update { it.copy(emailError = e.message) }
-        } catch (e: InvalidEmailException) {
-            _state.update { it.copy(emailError = e.message) }
-        } catch (e: EmptyPasswordException) {
-            _state.update { it.copy(passwordError = e.message) }
+            } catch (e: EmptyEmailException) {
+                _state.update { it.copy(emailError = e.message) }
+            } catch (e: InvalidEmailException) {
+                _state.update { it.copy(emailError = e.message) }
+            } catch (e: EmptyPasswordException) {
+                _state.update { it.copy(passwordError = e.message) }
+            }
+
         }
     }
 

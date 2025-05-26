@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -28,7 +29,7 @@ fun AppTextField(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            label = { Text(text = label) },
+            label = { Text(text = label, color = MaterialTheme.colorScheme.outline) },
             isError = isError,
             keyboardOptions = keyboardOptions,
             singleLine = true,
@@ -41,6 +42,7 @@ fun AppTextField(
                 errorLabelColor = MaterialTheme.colorScheme.error,
                 cursorColor = MaterialTheme.colorScheme.primary
             ),
+            shape = RoundedCornerShape(16.dp),
             modifier = Modifier.fillMaxWidth()
         )
         if (isError && !errorMessage.isNullOrBlank()) {
