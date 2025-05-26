@@ -66,6 +66,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.material.icons.extended)
+    implementation(libs.material3.core)
 
 
     implementation(platform(libs.firebase.bom))

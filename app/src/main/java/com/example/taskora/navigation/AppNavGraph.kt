@@ -27,6 +27,10 @@ fun AppNavGraph(
         composable(AppConstants.FORGET_PASSWORD_ROUTE) {
             ForgetPasswordScreen(navController)
         }
+
+        composable(AppConstants.HOME_ROUTE) {
+//            HomeScreen(navController)
+        }
     }
 
 }
