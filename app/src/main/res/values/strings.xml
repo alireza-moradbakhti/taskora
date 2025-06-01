@@ -2,13 +2,16 @@
     <string name="app_name">Taskora</string>
     <string name="greeting">Welcome Back!</string>
     <string name="email">Email</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
     <string name="full_name">Full Name</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
-    <string name="sign_up_desc">Don\'t have an account? Sign up</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_up_desc">Don\'t have an account?</string>
     <string name="password_visible">Show Password</string>
     <string name="password_invisible">Hide password</string>
     <string name="register_header">Welcome to Taskora!</string>
