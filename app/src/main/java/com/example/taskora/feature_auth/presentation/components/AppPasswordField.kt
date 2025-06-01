@@ -21,7 +21,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -44,7 +46,7 @@ fun AppPasswordField(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            label = { Text(text = label, color = MaterialTheme.colorScheme.outline) },
+            label = { Text(text = label) },
             isError = isError,
             singleLine = true,
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -64,11 +66,22 @@ fun AppPasswordField(
                 }
             },
             shape = RoundedCornerShape(16.dp),
+            textStyle = TextStyle(
+                color = if (isError) colorResource(R.color.error_color_2)
+                else colorResource(R.color.black_shade_6)
+            ),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outline,
-                cursorColor = MaterialTheme.colorScheme.primary,
-                errorBorderColor = MaterialTheme.colorScheme.error
+                errorBorderColor = colorResource(R.color.error_color),
+                focusedBorderColor = if (isError) colorResource(R.color.error_color) else colorResource(
+                    R.color.primary_color
+                ),
+                unfocusedBorderColor = if (isError) colorResource(R.color.error_color) else colorResource(
+                    R.color.black_shade_4
+                ),
+                focusedLabelColor = colorResource(R.color.primary_color),
+                unfocusedLabelColor = colorResource(R.color.black_shade_4),
+                errorLabelColor = colorResource(R.color.error_color),
+                cursorColor = colorResource(R.color.primary_cursor_color)
             ),
             modifier = Modifier.fillMaxWidth()
         )

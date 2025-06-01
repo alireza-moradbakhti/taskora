@@ -12,7 +12,10 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.example.taskora.R
 
 @Composable
 fun AppTextField(
@@ -29,18 +32,25 @@ fun AppTextField(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            label = { Text(text = label, color = MaterialTheme.colorScheme.outline) },
+            label = { Text(text = label) },
             isError = isError,
             keyboardOptions = keyboardOptions,
             singleLine = true,
             trailingIcon = trailingIcon,
+            textStyle = TextStyle(
+                color = if (isError) colorResource(R.color.error_color_2)
+                else colorResource(R.color.black_shade_6)
+            ),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outline,
-                focusedLabelColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = MaterialTheme.colorScheme.onSurface,
-                errorLabelColor = MaterialTheme.colorScheme.error,
-                cursorColor = MaterialTheme.colorScheme.primary
+                focusedBorderColor = if (isError) colorResource(R.color.error_color) else colorResource(R.color.primary_color),
+                unfocusedBorderColor = if (isError) colorResource(R.color.error_color) else colorResource(R.color.black_shade_4),
+                focusedLabelColor = colorResource(R.color.primary_color),
+                unfocusedLabelColor = colorResource(R.color.black_shade_4),
+                errorLabelColor = colorResource(R.color.error_color),
+                errorBorderColor = colorResource(R.color.error_color),
+                cursorColor = colorResource(R.color.primary_cursor_color),
+                focusedTextColor = if (isError) colorResource(R.color.error_color_2) else colorResource(R.color.black_shade_6),
+                unfocusedTextColor = if (isError) colorResource(R.color.error_color_2) else colorResource(R.color.black_shade_6),
             ),
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.fillMaxWidth()
@@ -49,7 +59,7 @@ fun AppTextField(
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = errorMessage,
-                color = MaterialTheme.colorScheme.error,
+                color = colorResource(R.color.error_color),
                 style = MaterialTheme.typography.labelSmall
             )
         }
