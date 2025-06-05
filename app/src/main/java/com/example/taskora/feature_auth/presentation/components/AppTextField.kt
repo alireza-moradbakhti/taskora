@@ -39,18 +39,18 @@ fun AppTextField(
             trailingIcon = trailingIcon,
             textStyle = TextStyle(
                 color = if (isError) colorResource(R.color.error_color_2)
-                else colorResource(R.color.black_shade_6)
+                else colorResource(R.color.black_shade6)
             ),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = if (isError) colorResource(R.color.error_color) else colorResource(R.color.primary_color),
-                unfocusedBorderColor = if (isError) colorResource(R.color.error_color) else colorResource(R.color.black_shade_4),
+                unfocusedBorderColor = if (isError) colorResource(R.color.error_color) else colorResource(R.color.black_shade4),
                 focusedLabelColor = colorResource(R.color.primary_color),
-                unfocusedLabelColor = colorResource(R.color.black_shade_4),
+                unfocusedLabelColor = colorResource(R.color.black_shade4),
                 errorLabelColor = colorResource(R.color.error_color),
                 errorBorderColor = colorResource(R.color.error_color),
                 cursorColor = colorResource(R.color.primary_cursor_color),
-                focusedTextColor = if (isError) colorResource(R.color.error_color_2) else colorResource(R.color.black_shade_6),
-                unfocusedTextColor = if (isError) colorResource(R.color.error_color_2) else colorResource(R.color.black_shade_6),
+                focusedTextColor = if (isError) colorResource(R.color.error_color_2) else colorResource(R.color.black_shade6),
+                unfocusedTextColor = if (isError) colorResource(R.color.error_color_2) else colorResource(R.color.black_shade6),
             ),
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier.fillMaxWidth()
