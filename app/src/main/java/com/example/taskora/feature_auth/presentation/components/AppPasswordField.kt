@@ -68,7 +68,7 @@ fun AppPasswordField(
             shape = RoundedCornerShape(16.dp),
             textStyle = TextStyle(
                 color = if (isError) colorResource(R.color.error_color_2)
-                else colorResource(R.color.black_shade_6)
+                else colorResource(R.color.black_shade6)
             ),
             colors = OutlinedTextFieldDefaults.colors(
                 errorBorderColor = colorResource(R.color.error_color),
@@ -76,10 +76,10 @@ fun AppPasswordField(
                     R.color.primary_color
                 ),
                 unfocusedBorderColor = if (isError) colorResource(R.color.error_color) else colorResource(
-                    R.color.black_shade_4
+                    R.color.black_shade4
                 ),
                 focusedLabelColor = colorResource(R.color.primary_color),
-                unfocusedLabelColor = colorResource(R.color.black_shade_4),
+                unfocusedLabelColor = colorResource(R.color.black_shade4),
                 errorLabelColor = colorResource(R.color.error_color),
                 cursorColor = colorResource(R.color.primary_cursor_color)
             ),

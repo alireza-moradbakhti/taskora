@@ -129,7 +129,7 @@ fun LoginScreen(
         ) {
             Text(
                 text = stringResource(R.string.sign_up_desc),
-                color = colorResource(R.color.black_shade_6),
+                color = colorResource(R.color.black_shade6),
             )
 
             Spacer(modifier = Modifier.width(4.dp))

@@ -33,9 +33,9 @@ fun LoadingButton(
         enabled = !isLoading,
         colors = ButtonColors(
             containerColor = colorResource(R.color.primary_color),
-            contentColor = colorResource(R.color.white_shade_7),
+            contentColor = colorResource(R.color.white_shade5),
             disabledContainerColor = colorResource(R.color.gray_shade_4),
-            disabledContentColor = colorResource(R.color.white_shade_7)
+            disabledContentColor = colorResource(R.color.white_shade5)
         )
     ) {
         if (isLoading) {
@@ -49,7 +49,7 @@ fun LoadingButton(
                 text = text,
                 fontSize = 14.sp,
                 style = MaterialTheme.typography.labelLarge,
-                color = colorResource(R.color.white_shade_7)
+                color = colorResource(R.color.white_shade5)
             )
         }
     }
